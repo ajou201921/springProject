@@ -1,5 +1,6 @@
 package org.ajou.realcoding.weathercrawler.Lolrecodesearch.controller;
 
+import org.ajou.realcoding.weathercrawler.Lolrecodesearch.domain.CurrentRecord;
 import org.ajou.realcoding.weathercrawler.Lolrecodesearch.domain.CurrentState;
 import org.ajou.realcoding.weathercrawler.Lolrecodesearch.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class RecordController {
     @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}")
     public CurrentState getCurrentState (@PathVariable String summonerName) throws IOException {
         return recordService.getSummonerId(summonerName);
+    }
+
+    @GetMapping("/lol/league/v4/entries/by-summoner/{encryptedSummonerId}")
+    public List<CurrentRecord> getLeagueState (@PathVariable String encryptedSummonerId) throws IOException {
+        return recordService.getSummonerRecord(encryptedSummonerId);
     }
 
 
