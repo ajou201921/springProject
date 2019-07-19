@@ -13,9 +13,8 @@ import java.util.List;
 
 @Service
 public class OpenLolApiClient {
-    private final String api_key = "RGAPI-97adad0e-5022-49c1-982b-6e4a70a7039c";
+    private final String api_key = "RGAPI-2d8c93b3-ef13-4667-9eb9-86313fac9272";
     private final String riotUrl1 = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonername}?api_key={api_key}";
-
     private final String riotUrl2 = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}?api_key={api_key}";
 
     @Autowired
@@ -30,7 +29,5 @@ public class OpenLolApiClient {
         List<CurrentRecord> list = response.getBody();
         return list;
 
-
-        //return restTemplate.exchange(riotUrl2, HttpMethod.GET, null, CurrentRecord.class, encryptedSummonerId , api_key).getBody();
     }
 }

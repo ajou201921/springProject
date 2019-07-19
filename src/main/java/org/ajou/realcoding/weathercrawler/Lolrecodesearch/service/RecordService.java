@@ -23,20 +23,20 @@ public class RecordService {
     @Autowired
     RecordRepository recordRepository;
 
-    public CurrentState getSummonerId(String id1) throws IOException {
+    public List<CurrentRecord> realgetSummonerRecord(String id3) throws IOException {
+
+
+        List<CurrentRecord> currentRecords = openLolApiClient.requestCurrentRecord(id3);
+
+        recordRepository.updateCurrentRecord(id3,currentRecords);
+
+        return  currentRecords;
+    }
+
+    public CurrentState realgetSummonerId(String id1) throws IOException {
 
         CurrentState currentState = openLolApiClient.requestCurrentState(id1);
-        recordRepository.insertCurrentState(currentState);
 
         return currentState;
     }
-
-    public List<CurrentRecord> getSummonerRecord(String id2) throws IOException {
-
-        List<CurrentRecord> currentRecord = openLolApiClient.requestCurrentRecord(id2);
-        recordRepository.insertCurrentRecord(currentRecord);
-
-        return currentRecord;
-    }
-
 }
