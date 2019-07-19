@@ -1,5 +1,6 @@
 package org.ajou.realcoding.weathercrawler.Lolrecodesearch.api;
 
+import org.ajou.realcoding.weathercrawler.Lolrecodesearch.domain.CurrentRecord;
 import org.ajou.realcoding.weathercrawler.Lolrecodesearch.domain.CurrentState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @Service
 public class OpenLolApiClient {
-    private final String api_key = "RGAPI-ed426b69-30d1-418c-b109-9fcca68ba053";
+    private final String api_key = "RGAPI-97adad0e-5022-49c1-982b-6e4a70a7039c";
     private final String riotUrl1 = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonername}?api_key={api_key}";
 
+    private final String riotUrl2 = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}?api_key={api_key}";
 
     @Autowired
     RestTemplate restTemplate;
@@ -23,4 +25,12 @@ public class OpenLolApiClient {
         return restTemplate.exchange(riotUrl1, HttpMethod.GET,null, CurrentState.class, summonername , api_key).getBody();
     }
 
+    public List<CurrentRecord> requestCurrentRecord(String encryptedSummonerId){
+        ResponseEntity<List<CurrentRecord>> response = restTemplate.exchange(riotUrl2,HttpMethod.GET, null, new ParameterizedTypeReference<List<CurrentRecord>>() {}, encryptedSummonerId ,api_key );
+        List<CurrentRecord> list = response.getBody();
+        return list;
+
+
+        //return restTemplate.exchange(riotUrl2, HttpMethod.GET, null, CurrentRecord.class, encryptedSummonerId , api_key).getBody();
+    }
 }
